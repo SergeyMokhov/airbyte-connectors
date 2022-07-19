@@ -91,10 +91,14 @@ export class Incidents extends ServiceNowConverter {
         : undefined;
     if (applicationName) {
       const applicationMapping = this.applicationMapping(ctx);
+      const applicationPlatform = applicationName.replace(
+        / ?- ?(DEV|STAGE|PROD)$/,
+        ''
+      );
 
       let application = {
         name: applicationName,
-        platform: '',
+        platform: applicationPlatform,
       };
 
       if (
