@@ -91,7 +91,7 @@ export class Incidents extends ServiceNowConverter {
         : undefined;
     if (applicationName) {
       const applicationMapping = this.applicationMapping(ctx);
-      const appPlatRegex = new RegExp(/ ?- ?(dev|stage|stag|prod|emea)$/, 'i');
+      const appPlatRegex = new RegExp(/ ?- ?p$/, 'i');
       const applicationPlatform = applicationName.replace(appPlatRegex, '');
 
       let application = {
