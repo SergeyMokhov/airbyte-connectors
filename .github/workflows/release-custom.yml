@@ -31,6 +31,6 @@ jobs:
           version_tag: ${{ env.image }}:${{ env.TAG_VERSION }}
         run: |
           docker build . \
-            --build-arg path=destinations/airbyte-faros-destination \
-            -t ${{ env.version_tag }} \
-          docker push ${{ env.version_tag }}
+            --build-arg "path=destinations/airbyte-faros-destination" \
+            -t "${{ env.version_tag }}"
+          docker push "${{ env.version_tag }}"
