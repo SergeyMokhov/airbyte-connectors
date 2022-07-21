@@ -16,7 +16,7 @@ jobs:
 
       - name: Construct tag
         run: |
-          SHORT_SHA=`echo ${GITHUB_SHA} | cut -c1-8`"
+          SHORT_SHA=`echo ${GITHUB_SHA} | cut -c1-8`
           echo "TAG_VERSION=servicenow-$SHORT_SHA" >> $GITHUB_ENV
 
       - name: Docker login
