@@ -25,12 +25,12 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
-      - name: Publish connector images
+      - name: Build & publish connector image
         env:
           DOCKER_BUILDKIT: 1
           version_tag: ${{ env.image }}:${{ env.TAG_VERSION }}
         run: |
           docker build . \
             --build-arg path=destinations/airbyte-faros-destination \
-            -t $version_tag \
-          docker push $version_tag
+            -t ${{ env.version_tag }} \
+          docker push ${{ env.version_tag }}
