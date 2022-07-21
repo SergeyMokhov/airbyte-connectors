@@ -1,9 +1,6 @@
 name: Release Custom
 
-on:  
-  push:
-    branches:
-      - wm/autodesk-servicenow
+on:
   workflow_dispatch:
 
 jobs:
@@ -16,3 +13,24 @@ jobs:
     steps:
       - name: Check out
         uses: actions/checkout@v3
+
+      - name: Construct tag
+        run: |
+          SHORT_SHA=`echo ${GITHUB_SHA} | cut -c1-8`"
+          echo "TAG_VERSION=servicenow-$SHORT_SHA" >> $GITHUB_ENV
+
+      - name: Docker login
+        uses: docker/login-action@v2.0.0
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: Publish connector images
+        env:
+          DOCKER_BUILDKIT: 1
+          version_tag: ${{ env.image }}:${{ env.TAG_VERSION }}
+        run: |
+          docker build . \
+            --build-arg path=destinations/airbyte-faros-destination \
+            -t $version_tag \
+          docker push $version_tag
