@@ -216,20 +216,8 @@ export class Bitbucket {
         } catch (err) {
           const stringifiedError = JSON.stringify(this.buildInnerError(err));
           this.logger.warn(
-            `Error fetching environment for repository: ${repoSlug}. Error: ${stringifiedError}. Re trying with environment uuid urlencoded`
+            `Error fetching environment for repository: ${repoSlug}. Error: ${stringifiedError}`
           );
-          try {
-            res.fullEnvironment = await this.getEnvironment(
-              workspace,
-              repoSlug,
-              encodeURI(deployment.environment.uuid)
-            );
-          } catch (err_encoded){
-            const stringifiedError = JSON.stringify(this.buildInnerError(err_encoded));
-            this.logger.warn(
-              `Error fetching environment for repository: ${repoSlug}. Error: ${stringifiedError}`
-            );
-          }
         }
         yield res;
       }
