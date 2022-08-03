@@ -241,17 +241,22 @@ export class Bitbucket {
     envID: string
   ): Promise<Environment> {
     try {
-      return await this.doGetEnvironment(workspace, repoSlug, envID);
+      this.logger.info(`Fetching environment "${envID}" no url encoding. Werkspace: "${workspace}" RepoSlug: "${repoSlug}"`)
+      let r = await this.doGetEnvironment(workspace, repoSlug, envID);
+      return r
     } catch (err) {
+      this.logger.warn(`Error fetching environemnt without urlencoding. ${err}"`)
       try {
         this.logger.debug(
           `Error fetching ${envID} environment for repository "${workspace}/${repoSlug}"`
         );
-        return await this.doGetEnvironment(
+        this.logger.info(`Fetching environment "${envID}" WITH url encoding. Werkspace: "${workspace}" RepoSlug: "${encodeURIComponent(envID)}"`)
+        let r = await this.doGetEnvironment(
           workspace,
           repoSlug,
           encodeURIComponent(envID)
         );
+        return r
       } catch (err2) {
         throw new VError(
           this.buildInnerError(err2),
