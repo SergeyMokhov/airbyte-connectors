@@ -213,6 +213,7 @@ export class Bitbucket {
             repoSlug,
             deployment.environment.uuid
           );
+          this.logger.info(`Workspace: "${workspace}", RepoSlug: "${repoSlug}", deployment.environment.uuid: "${deployment.environment.uuid}". Res is: ${JSON.stringify(res, null, 4)}`)
         } catch (err) {
           const stringifiedError = JSON.stringify(this.buildInnerError(err));
           this.logger.warn(
@@ -245,7 +246,7 @@ export class Bitbucket {
       let r = await this.doGetEnvironment(workspace, repoSlug, envID);
       return r
     } catch (err) {
-      this.logger.warn(`Error fetching environemnt without urlencoding. ${err}"`)
+      this.logger.warn(`Error fetching environemnt without urlencoding. ${JSON.stringify(err, null, 4)}"`)
       try {
         this.logger.debug(
           `Error fetching ${envID} environment for repository "${workspace}/${repoSlug}"`
