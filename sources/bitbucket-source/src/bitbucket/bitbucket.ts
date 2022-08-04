@@ -244,6 +244,7 @@ export class Bitbucket {
     try {
       this.logger.info(`Fetching environment "${envID}" no url encoding. Werkspace: "${workspace}" RepoSlug: "${repoSlug}"`)
       let r = await this.doGetEnvironment(workspace, repoSlug, envID);
+      this.logger.info(`Environment fetched is: ${JSON.stringify(r, null, 4)}`)
       return r
     } catch (err) {
       this.logger.warn(`Error fetching environemnt without urlencoding. ${JSON.stringify(err, null, 4)}"`)
@@ -257,6 +258,7 @@ export class Bitbucket {
           repoSlug,
           encodeURIComponent(envID)
         );
+        this.logger.info(`Environment fetched is: ${JSON.stringify(r, null, 4)}`)
         return r
       } catch (err2) {
         throw new VError(
