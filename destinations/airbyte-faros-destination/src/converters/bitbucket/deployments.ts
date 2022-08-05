@@ -80,7 +80,7 @@ export class Deployments extends BitbucketConverter {
           application,
           build,
           uid: deployment.uuid,
-          env: this.convertEnvironment(deployment.environment?.slug),
+          env: this.convertEnvironment(deployment.environment?.name),
           status: this.convertDeploymentStatus(deployment.state),
           startedAt: Utils.toDate(deployment.deployable.createdOn),
           source,
